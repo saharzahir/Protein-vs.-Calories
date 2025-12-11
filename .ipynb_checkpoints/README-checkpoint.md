@@ -27,7 +27,12 @@ For the univariate EDA, I looked at the distribution of `protein` and `calorie_d
 
 For my bivariate analysis, I created a scatterplit comparing protein and calorie density. Most recipes cluster in a low-protein, moderate-calorie range, but there's considerable spread, suggestings that the relationship between protein and calories density isn't perfectly linear. This motivates using statistical testing in Step 4 to determine whether higher protein actually corresponds to lower calorie density. 
 
-![Protein vs. Caloric Density Plot](p_vs_c.png)
+<iframe
+  src="assets/protein_perm_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe> 
 
 ### Identifying Outliers
 Because there are a few very distinct outliers, I first wanted to identify which recipes they were and how extreme they are. A small number of recipes contain very high calorie counts (30,000+ calories per serving), which compress the scale of the plots and make it difficult to see the rest of the data.
@@ -45,13 +50,13 @@ Before exploring distribution, I examined extreme values in the calories and pro
 **`Left off on graph for Distribution of Protein per Serving`**
 
 ## Missingness 
-To understand whether missing descriptions occur at random or follow a pattern, I examined the `description` column, which had 70 missing values. All nutritional columns (`protein`, `calories`, `fat`, ect.) contain no missing data, so `description` was the most appropriate variable for this analysis. 
+To understand whether missing descriptions occur at random or follow a pattern, I examined the `description` column, which had 70 missing values. All nutritional columns (`protein`, `calories`, `fat`, etc.) contain no missing data, so `description` was the most appropriate variable for this analysis. 
 
 I compared the average number of ingredients between recipes **with** and **without** descriptions. The observed difference in means was approximately **1.47 ingredients**, with recipes lacking descriptions tending to use fewer ingredients. To test whether this difference could be due to chance, I conducted a permutation test with 1,000 shuffles of missgness labels. 
 
-The resulting p-values was effectively 0, meaning it is extremly unlikely to observe a difference this large if missigness were completely random. Therefore, missigness in `description` is **not MCAR**. It is most it most likely **MAR**, meaning it depends on another observed variable, in this case, recipe complexity (measured by the number of ingredients). Simpler recipes appear less likely to include a written description. 
+The resulting p-value was effectively 0, meaning it is extremely unlikely to observe a difference this large if missingness were completely random. Therefore, missingness in `description` is **not MCAR**. It is most likely **MAR**, meaning it depends on another observed variable, in this case, recipe complexity (measured by the number of ingredients). Simpler recipes appear less likely to include a written description. 
 
-Since `description`is not central to my modeling or hypothesis testing, this missingness pattern does not affect downstream analysis, but it provides useful context for understanding how recipe data is recorded on Food.com
+Since `description` is not central to my modeling or hypothesis testing, this missingness pattern does not affect downstream analysis, but it provides useful context for understanding how recipe data is recorded on Food.com
 
 
 
