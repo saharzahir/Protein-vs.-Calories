@@ -1,5 +1,14 @@
 # The Implications of Protein Content on Caloric Density in Recipes 
 
+<div style = "display: flex; align-items: center; gap: 12px; margin-top: 10px;">
+    <img src = "assets/sahar.jpg"
+        alt = "Sahar Zahir"
+        width = "70"
+        style = "border-radius: 50%; object-fit: cover;">
+    <span style = "font-size: 1.1rem;"><strong>Author:</strong> Sahar Zahir</span>
+</div>
+
+
 ## Introduction
 
 Oftentimes one of the most common challenges as an adult is figuring out what to make for dinner. Combine that with trying to maintain health and fitness goals and you end up realizing nobody prepared you for the amount of times you would ask "How much protein does it have though?" in your adult life. It ends up becomes discouraging to keep up with your protein goals, but **what if there was correlation behind highly rated recipes that prioritized protein being less calorie dense?** 
