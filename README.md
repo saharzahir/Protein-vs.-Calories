@@ -28,11 +28,11 @@ For the univariate EDA, I looked at the distribution of `protein` and `calorie_d
 For my bivariate analysis, I created a scatterplit comparing protein and calorie density. Most recipes cluster in a low-protein, moderate-calorie range, but there's considerable spread, suggestings that the relationship between protein and calories density isn't perfectly linear. This motivates using statistical testing in Step 4 to determine whether higher protein actually corresponds to lower calorie density. 
 
 <iframe
-  src="assets/protein_perm_test.html"
+  src="assets/protein_vs_calorie_density.html"
   width="800"
   height="600"
   frameborder="0"
-></iframe> 
+></iframe>
 
 ### Identifying Outliers
 Because there are a few very distinct outliers, I first wanted to identify which recipes they were and how extreme they are. A small number of recipes contain very high calorie counts (30,000+ calories per serving), which compress the scale of the plots and make it difficult to see the rest of the data.
