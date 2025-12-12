@@ -123,8 +123,34 @@ p = 1.0
 
 We **fail to reject** the null hypothesis 
 
-- There is **no evidence** that high-protein recipes have fewer calories per serving. The observed data instead suggests that high-protein recipes tend to be **higher** in calories. 
+- There is **no evidence** that high-protein recipes have fewer calories per serving. The observed data instead suggests that high-protein recipes tend to be **higher** in calories.
 
+## Framing a Prediction 
+To extend the analysis, I frame a predicition task where the goal is to predict the **calorie density** of a recipe using its nutritional information and basic recipe characteristics. This is a **regression** problem since calorie density is a continuous numeric variable. Calorie density was chosen as the response variable because it directly reflects hour energy-dense a recipe is and aligns with the project's focus on nutritional tradeoffs. Atthe time of prediction, nutritional values (e.g., protein, fat, sugar) and  recipe metadata (such as cook time and number of ingredients) would be available, so only these featues are used for modeling. Model performance is evaluated using **Root Mean Squared Error (RMSE)**. RMSE is appropriate because it penalizes large predicition errors more heavily, which is important when misestimating the calorie density of a recipe. 
+
+## Baseline Model
+
+All features are quantitative:
+
+- `protein`
+- `fat`
+- `carbohydrates`
+- `minutes`
+- `n_ingredients`
+
+These features were standardized using StandardScaler and combined with the regression model in a single `sklearn` pipeline
+
+### Evaluation Metric 
+
+I evaluated model performance using **Root Mean Squared Error**, which measures the typical magnitude of predicition errors and penalizes large mistakes more heavily. 
+
+### Baseline Performance 
+
+The baseline model achieved an RMSE of approximately:
+
+**RMSE ~** 43.5
+
+This baseline provides a reasonable starting point, but its performance suggests that calorie density is not fully explained by linear relationships alone, motivating more expressive models in later steps. 
 
 
 
