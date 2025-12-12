@@ -1,11 +1,11 @@
 # The Implications of Protein Content on Caloric Density in Recipes 
 
-<div style = "display: flex; align-items: center; gap: 12px; margin-top: 10px;">
-    <img src = "assets/sahar.jpg"
-        alt = "Sahar Zahir"
-        width = "70"
-        style = "border-radius: 50%; object-fit: cover;">
-    <span style = "font-size: 1.1rem;"><strong>Author:</strong> Sahar Zahir</span>
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
+  <img src="{{ '/assets/sahar.jpg' | relative_url }}" 
+       alt="Sahar Zahir"
+       width="70"
+       style="border-radius: 50%; object-fit: cover;">
+  <span style="font-size: 1.1rem;"><strong>Author:</strong> Sahar Zahir</span>
 </div>
 
 
