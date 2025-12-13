@@ -1,6 +1,7 @@
-<h2 style = "margin-top: 0;"> 
-    The Implication of Protein Content on Caloric Density 
-</h2>
+---
+layout: home
+title: "The Implication of Protein Content on Caloric Density"
+---
 
 <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
   <img src="{{ '/assets/sahar.jpg' | relative_url }}" 
@@ -148,11 +149,91 @@ I evaluated model performance using **Root Mean Squared Error**, which measures 
 
 The baseline model achieved an RMSE of approximately:
 
-**RMSE ~** 43.5
+**RMSE** ~ 43.5
 
 This baseline provides a reasonable starting point, but its performance suggests that calorie density is not fully explained by linear relationships alone, motivating more expressive models in later steps. 
 
+## Final Model
 
+To improve upon the baseline linear regression model, I trained a more flexible **Random Forest Regressor** to predict calorie density. Unlike linear regression, random forests can capture non-linear relationships and interactions between nutritional features, which are common in recipe data.
 
+### Features Used
+The final model used the same features as the baseline model:
+- Protein
+- Fat
+- Carbohydrates
+- Cook time (minutes)
+- Number of ingredients
 
+These features are all known at the time a recipe is created, making them appropriate for prediction.
 
+### Hyperparameter Tuning
+I performed hyperparameter tuning using **GridSearchCV** with 3-fold cross-validation. The following hyperparameters were tuned:
+- Number of trees (`n_estimators`)
+- Maximum tree depth (`max_depth`)
+- Minimum samples per leaf (`min_samples_leaf`)
+
+These parameters control model complexity and help balance bias and variance.
+
+### Model Performance
+To evaluated model performance **Root Mean Squared Error (RMSE)** was utilized on a held-out test set.
+
+- **Baseline Model RMSE:** 43.5  
+- **Final Model RMSE:** 91.2  
+
+Although the final model did not outperform the baseline model, this result suggests that the simpler linear model generalizes better for this prediction task. The random forest likely overfits extreme values in calorie density, which are heavily right-skewed in the data.
+
+Despite the lack of improvement, this model demonstrates a thoughtful attempt to capture non-linear structure and explore more expressive modeling techniques.
+
+## Fairness Analysis 
+To evaluate whether my final regression model performs equitably across different types of recipes, I conducted a fairness analysis comparing **high-protein** and **low-protein recipes**.
+
+### Groups 
+
+- **Low-protein recipes:** bottom 25% of protein values
+- **High-protein recipes:** top 25% of protein values
+
+These groups were defined using protein quartiles computed from the full dataset, and fairness was evaluated **only on the held-out test set** to measure generalization. 
+
+### Evaluation Metric 
+
+Because this is a regression task, I used **Root Mean Squared Error (RMSE)** as the evaluation metric. RMSE is appropriate becaue it penalizes larger prediction errors more heavily and aligns with the metric used to evaluate overall model performance. 
+
+### Hypotheses
+
+- **Null Hypothesis (H₀):**
+  The model is fair. Any difference in RMSE between high-protein and low-protein recipes is due to
+  random chance. 
+- **Alternative Hypothesis (H₁):**
+  The model is unfair. The RMSE for high-protein recipes is larger than the RMSE for low-protein
+  recipes.
+
+### Test Statistic
+
+I used the difference between groups:
+
+T = RMSE(high-protein) - RMSE(low-protein)
+
+Positive values indicate worse performance on high-protein recipes. 
+
+### Observed Results 
+- RMSE(low-protein): **48.75**
+- RMSE(high-protein): **171.74**
+- Observed Statistic: **122.99**
+
+### Permutation Test
+
+I performed a permutation test with **2,000** shuffles of the protein group labels while holding model predictions fixed. This simulates the distribution of the test statistic under the null hypothesis that group membership does not affect model performance.
+
+- One-sided p-value: 0.0045
+
+### Conclusion
+
+Because the p-value is well below the 0.05 significance level, I reject the null hypothesis. There is strong evidence that my final model performs significantly worse on high-protein recipes than on low-protein recipes. This indicates a fairness concern, suggesting that the model’s predictions are less reliable for recipes with higher protein content.
+
+<iframe 
+    src="assets/fairness_perm_test.html" 
+    width="800" 
+    height="600" 
+    frameborder="0" 
+    ></iframe>
