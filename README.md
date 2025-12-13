@@ -1,8 +1,3 @@
----
-layout: home
-title: "The Implication of Protein Content on Caloric Density"
----
-
 <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
   <img src="{{ '/assets/sahar.jpg' | relative_url }}" 
        alt="Sahar Zahir"
