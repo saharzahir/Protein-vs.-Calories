@@ -96,7 +96,7 @@ To test whether the missingness of `description` depends on other observed varia
 First, I examined whether missingness depends on `n_ingredients`. The observed difference in the average number of ingredients between recipes with and without descriptions was approximately **1.47 ingredients**, with recipes lacking descriptions tending to use fewer ingredients. A permutation test with 1,000 shuffles produced a p-value effectively equal to **0**, indicating that this difference is extremely unlikely to occur by chance. This provides strong evidence that missingness in `description` **does depend on** recipe complexity.
 
 <iframe
-  src="assets/missingness_ingredients_perm.html"
+  src="assets/assets/missingness_calories_perm.html"
   width="800"
   height="600"
   frameborder="0"
