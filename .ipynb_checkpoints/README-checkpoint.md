@@ -79,13 +79,35 @@ Recipes in the high-protein group tend to have higher average calories and calor
 
 
 ## Missingness 
-To understand whether missing descriptions occur at random or follow a pattern, I examined the `description` column, which had 70 missing values. All nutritional columns (`protein`, `calories`, `fat`, etc.) contain no missing data, so `description` was the most appropriate variable for this analysis. 
 
-I compared the average number of ingredients between recipes **with** and **without** descriptions. The observed difference in means was approximately **1.47 ingredients**, with recipes lacking descriptions tending to use fewer ingredients. To test whether this difference could be due to chance, I conducted a permutation test with 1,000 shuffles of missingness labels. 
+### NMAR Consideration
 
-The resulting p-value was effectively 0, meaning it is extremely unlikely to observe a difference this large if missingness were completely random. Therefore, missingness in `description` is **not MCAR**. It is most likely **MAR**, meaning it depends on another observed variable, in this case, recipe complexity (measured by the number of ingredients). Simpler recipes appear less likely to include a written description. 
+The column with non-trivial missingness in this dataset is `description`, which contains 70 missing values. To determine whether this missingness could be **NMAR (Not Missing At Random)**, we must reason about the data-generating process rather than relying solely on observed data.
 
-Since `description` is not central to my modeling or hypothesis testing, this missingness pattern does not affect downstream analysis, but it provides useful context for understanding how recipe data is recorded on Food.com
+It is unlikely that the missingness of `description` is NMAR. There is no strong reason to believe that the absence of a description depends on the *unobserved content of the description itself* (for example, recipes being intentionally left blank due to poor quality or sensitive information). Instead, missing descriptions are more plausibly explained by observable characteristics of the recipe, such as how simple or quick it is to make.
+
+Therefore, while NMAR cannot be ruled out with certainty, there is no compelling evidence to suggest that the missingness mechanism is NMAR in this context.
+
+
+### Missingness Dependency
+
+To test whether the missingness of `description` depends on other observed variables, I conducted permutation tests comparing recipes **with** and **without** descriptions.
+
+First, I examined whether missingness depends on `n_ingredients`. The observed difference in the average number of ingredients between recipes with and without descriptions was approximately **1.47 ingredients**, with recipes lacking descriptions tending to use fewer ingredients. A permutation test with 1,000 shuffles produced a p-value effectively equal to **0**, indicating that this difference is extremely unlikely to occur by chance. This provides strong evidence that missingness in `description` **does depend on** recipe complexity.
+
+<iframe
+  src="assets/missingness_ingredients_perm.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Next, I tested whether missingness depends on `calories`. A permutation test comparing the calorie distributions of recipes with and without descriptions resulted in a non-significant p-value, providing no evidence of dependency. This suggests that missingness in `description` **does not depend on** caloric content.
+
+Together, these results indicate that missingness in `description` is **not MCAR**, but is consistent with a **MAR (Missing At Random)** mechanism, where missingness depends on observed variables such as recipe complexity rather than unobserved nutritional values.
+
+Since `description` is not used in downstream modeling or hypothesis testing, this missingness pattern does not affect the conclusions of the analysis, but it provides useful context for how recipe metadata is recorded on Food.com.
+
 
 ## Hypothesis Testing
 **Question:** Do high-protein recipes tend to have *fewer* calories per serving than low-protein recipes? 
